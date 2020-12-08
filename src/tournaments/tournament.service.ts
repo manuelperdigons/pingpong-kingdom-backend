@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import admin from 'firebase-admin';
 import dotenv from 'dotenv';
 
-dotenv.config({ path: `${__dirname}/../config.env` });
+dotenv.config({ path: `${__dirname}/../../config.env` });
 
 admin.initializeApp({
   credential: admin.credential.cert({
@@ -15,13 +15,13 @@ admin.initializeApp({
 const db = admin.firestore();
 
 @Injectable()
-export class AppService {
+export class TournamentService {
   async findAll() {
-    const allUsers = await db.collection('users').get();
+    const allUsers = await db.collection('tournaments').get();
     return allUsers.docs.map((doc) => doc.data());
   }
   async create(body) {
-    const newUser = await db.collection('users').add(body);
+    const newUser = await db.collection('tournaments').add(body);
     return (await newUser.get()).data();
   }
 }

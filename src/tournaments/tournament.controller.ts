@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
-import { AppService } from './app.service';
+import { TournamentService } from './tournament.service';
 
-@Controller('user')
-export class AppController {
-  constructor(private readonly appService: AppService) { }
+@Controller('tournament')
+export class TournamentController {
+  constructor(private readonly appService: TournamentService) { }
 
   @Get()
   findAll() {

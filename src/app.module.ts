@@ -1,10 +1,15 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { TournamentModule } from './tournaments/tournament.module';
+import { AuthModule } from './auth/auth.module';
+import { ProtectMiddleware } from './common/middleware/protect.middleware';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [TournamentModule, AuthModule],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(ProtectMiddleware)
+      .forRoutes('tournament');
+  }
+}
